@@ -1,0 +1,4 @@
+time="2018-08-27T18:45:54+07:00" level=info msg="test log" file="app/app.go:22 @main"
+time="2018-08-27T18:57:58+07:00" level=info msg="test log" file="app/app.go:22 @main"
+time="2018-08-27T20:58:54+07:00" level=fatal msg="Error while reading config from config.yml" file="internal/common/configs/config.go:21 @InitConfig"
+time="2018-08-27T20:59:45+07:00" level=fatal msg="Error while reading config from config.yml" file="internal/common/configs/config.go:21 @InitConfig"

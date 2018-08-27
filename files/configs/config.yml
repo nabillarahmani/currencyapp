@@ -1,0 +1,6 @@
+server:
+  port: ":7777"
+
+database:
+  connectionURI: "database connection uri"
+

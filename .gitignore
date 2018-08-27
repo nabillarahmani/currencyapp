@@ -1,0 +1,10 @@
+#vendors
+vendor/
+
+#misc
+.DS_STORE
+debug
+experiments/
+.vscode/
+**/debug.test
+**/.vstags
