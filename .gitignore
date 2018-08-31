@@ -1,6 +1,10 @@
 #vendors
 vendor/
 
+#app
+app
+!app/
+
 #misc
 .DS_STORE
 debug

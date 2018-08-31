@@ -25,11 +25,12 @@ type (
 	Fields map[string]interface{}
 )
 
+// singleton instantiation
 var (
 	logger Logger
 )
 
-//Init loggerj
+//Init logger with logrus
 func Init(accessFile string) {
 	logger = NewLogrus(accessFile, true)
 }

@@ -2,6 +2,7 @@ package configs
 
 import (
 	// library used from modules
+	"github.com/nabillarahmani/currencyapp/internal/common/database"
 	"github.com/nabillarahmani/currencyapp/internal/common/log"
 
 	// library used from outside
@@ -28,5 +29,20 @@ func InitConfig() {
 		log.Fatal("unable to decode configs var into struct")
 		return
 	}
+	return
+}
+
+// InitDatabaseConn is a function to init and store db obj to global var
+func InitDatabaseConn() {
+	if GlobalConfig.Database.ConnectionURI == "" {
+		log.Fatal("No valid db conn host exist!")
+	}
+
+	GlobalConfig.db.Conns = database.Init(GlobalConfig.Database.ConnectionType, GlobalConfig.Database.ConnectionURI)
+}
+
+// GetDatabaseObj will return database obj
+func GetDatabaseObj() (db database.Database) {
+	db = GlobalConfig.db.Conns
 	return
 }

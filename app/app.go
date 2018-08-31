@@ -1,6 +1,7 @@
 package main
 
 import (
+
 	// standard library from golang
 
 	"github.com/gorilla/mux"
@@ -9,6 +10,7 @@ import (
 	"github.com/nabillarahmani/currencyapp/handler/rest"
 	"github.com/nabillarahmani/currencyapp/internal/common/configs"
 	"github.com/nabillarahmani/currencyapp/internal/common/log"
+	"github.com/nabillarahmani/currencyapp/internal/currency"
 
 	// library used from outside
 	"gopkg.in/paytm/grace.v1"
@@ -25,12 +27,14 @@ func main() {
 	configs.InitConfig()
 
 	// init common modules like database or anything
+	configs.InitDatabaseConn()
 
 	// init http router
 	router := mux.NewRouter()
 	rest.InitRoutes(router)
 
 	// init modules
+	currency.InitPackage(configs.GetDatabaseObj())
 
 	// serve it
 	err := grace.Serve(":7777", router)

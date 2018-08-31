@@ -7,7 +7,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-//Log custom logger
+//Log custom logger. It is an polymorphic object from Logger interface
 type Log struct {
 	log    *logrus.Logger
 	fields Fields
