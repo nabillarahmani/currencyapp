@@ -1,0 +1,193 @@
+For FE, these explanation will based on per use case.
+
+1. User wants to input daily exchange rate data
+    - endpoint : `http://localhost:7777/v1/currency_rates/add`
+
+    - example payload:
+    `
+        curl -X POST \
+        http://localhost:7777/v1/currency_rates/add \
+        -H 'Cache-Control: no-cache' \
+        -H 'Postman-Token: eed985e0-abd6-4760-aa6a-881d33c3880f' \
+        -d '{
+            "from" : "USD",
+            "to" : "IDR",
+            "rates": "0.33",
+            "date" :"2018-08-25"
+        }'
+    `
+
+    where from, to, rates, and date based on input field on FE.
+
+    - example response:
+    `
+        {
+            "header": {
+                "reason": "",
+                "status_code": "200"
+            },
+            "data": true
+        }
+    `
+
+    where `data: true` is the indication that the request is succeed
+
+2. User has a list of exchange rates to be tracked
+
+    - endpoint: `http://localhost:7777/v1/currency_rates/get/{date}`
+    
+        {date} = desired date
+
+    - example payload:
+    `
+        curl -X GET \
+        http://localhost:7777/v1/currency_rates/get/2018-09-01 \
+        -H 'Cache-Control: no-cache' \
+        -H 'Postman-Token: e35cdab8-b5f0-4778-b3fc-b0023163eb67'
+    `
+
+    - example response:
+    `
+        {
+            "header": {
+                "reason": "",
+                "status_code": "200"
+            },
+            "data": {
+                "currency_rates_data": [
+                    {
+                        "from": "IDR",
+                        "to": "USD",
+                        "rate": "",
+                        "avg": "0.00000"
+                    },
+                    {
+                        "from": "USD",
+                        "to": "IDR",
+                        "rate": "0.50000",
+                        "avg": "0.20761"
+                    }
+                ]
+            }
+        }
+    `
+    zero could be an indication as `insufficient data`
+
+
+3. User wants to add an exchange rate to the list
+
+    - endpoint : `http://localhost:7777/v1/currency/addremove`
+
+    - example http:
+    `
+        POST /v1/currency/addremove HTTP/1.1
+        Host: localhost:7777
+        Content-Type: application/x-www-form-urlencoded
+        Cache-Control: no-cache
+        Postman-Token: 1a5552bf-465b-457f-b994-b8e892f9a65c
+
+        {
+            "from" : "USD",
+            "to" : "IDR",
+            "action": "add"
+        }
+    `
+
+    - example response:
+    `
+        {
+            "header": {
+                "reason": "",
+                "status_code": "200"
+            },
+            "data": true
+        }
+    `
+
+    where `"data": true` is an indication of succeed.
+
+4. User wants to remove an exchange rate from the list
+
+There will be 2 endpoints needed, first for display all currency, and second for remove.
+
+    - 1. get all currency exchange rate
+
+        - endpoint : `http://localhost:7777/v1/currency/get`
+
+        - example request :
+        `
+            curl -X GET \
+            http://localhost:7777/v1/get/currency \
+            -H 'Cache-Control: no-cache' \
+            -H 'Content-Type: application/x-www-form-urlencoded' \
+            -H 'Postman-Token: e979aa79-28e8-4a59-9020-7c6cfb990443'
+        `
+
+        - example response:
+        `
+            {
+                "header": {
+                    "reason": "",
+                    "status_code": "200"
+                },
+                "data": {
+                    "currency_datas": [
+                        {
+                            "from": "IDR",
+                            "to": "USD",
+                            "status": 1
+                        },
+                        {
+                            "from": "USD",
+                            "to": "IDR",
+                            "status": 1
+                        }
+                    ]
+                }
+            }
+        `
+
+    - 2. remove an exchange rate
+
+        - endpoint : `http://localhost:7777/v1/currency/addremove`
+
+        - example http:
+        `
+            POST /v1/currency/addremove HTTP/1.1
+            Host: localhost:7777
+            Content-Type: application/x-www-form-urlencoded
+            Cache-Control: no-cache
+            Postman-Token: 1a5552bf-465b-457f-b994-b8e892f9a65c
+
+            {
+                "from" : "USD",
+                "to" : "IDR",
+                "action": "remove"
+            }
+        `
+    
+        - example response success:
+        `
+        {
+            "header": {
+                "reason": "",
+                "status_code": "200"
+            },
+            "data": true
+        }
+        `
+
+        - example response failed:
+        `
+            {
+            "header": {
+                "reason": "Error currency not exist",
+                "status_code": "200"
+            },
+            "data": false
+        }
+        `
+
+5. User wants to see the exchange rate trend from the most recent 7 data points
+
+    - endpoint : `http://localhost:7777/v1/currency_rates/get/trend`

@@ -9,3 +9,5 @@ time="2018-09-01T12:25:49+07:00" level=error msg="error while upsert currency ra
 time="2018-09-01T12:25:49+07:00" level=error err="pq: syntax error at or near \")\"" file="handler/rest/currency/currency.go:167 @AddCurrencyRates"
 time="2018-09-01T12:28:19+07:00" level=error err="Error currency not exist" file="internal/controller/currency/currency.go:152 @AddCurrencyRatesController"
 time="2018-09-01T12:28:19+07:00" level=error err="Error currency not exist" file="handler/rest/currency/currency.go:167 @AddCurrencyRates"
+time="2018-09-01T23:49:19+07:00" level=error err="Error currency not exist" file="internal/controller/currency/currency.go:114 @RemoveCurrencyController"
+time="2018-09-01T23:49:19+07:00" level=error err="Error currency not exist" file="handler/rest/currency/currency.go:81 @AddRemoveCurrency"

@@ -1,0 +1,23 @@
+CREATE TABLE ws_currency(
+   id SERIAL,
+   from_curr VARCHAR NOT NULL,
+   to_curr VARCHAR NOT NULL,
+   status INT NOT NULL,
+   PRIMARY KEY(from_curr, to_curr)
+);
+
+CREATE TABLE ws_currency_rates(
+   id SERIAL,
+   date DATE NOT NULL,
+   from_curr VARCHAR NOT NULL,
+   to_curr VARCHAR NOT NULL,
+   rates decimal NOT NULL,
+   PRIMARY KEY(date, from_curr, to_curr)
+);
+
+
+Jadi terdapat dua buah table yang berada di dalam database test_currency. Yang pertama adalah `ws_currency` dan yang kedua adalah `ws_currency_rates`
+
+- ws_currency berfungsi untuk menyimpan semua list exchange rate `from` dan `to`. Lalu terdapat kolom `status` yang menandakan apakah exchange rate tersebut masih aktif atau tidak. Apabila terdapat exchange rate yang didelete, maka status akan diupdate menjadi 0. Primary key dari table ini adalah `from_curr` dan `to_curr`. Jadi apabila terdapat insersi dengan pkey yang sama maka akan diupsert.
+
+- ws_currency_rates berfungsi untuk menyimpan semua list exchange rates detail dari exchange rate yang terdapat di ws_currency, dimana terdapat informasi tanggal dan rate dari masing-masing exchange rate. Primary key dari table ini adalah `from_curr`, `to_curr` dan `date`. Jadi apabila terdapat insersi dengan tanggal yang sama maka akan diupsert.

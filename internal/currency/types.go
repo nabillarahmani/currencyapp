@@ -2,7 +2,6 @@ package currency
 
 import (
 	"fmt"
-	"html/template"
 
 	"github.com/nabillarahmani/currencyapp/internal/common/database"
 )
@@ -10,16 +9,6 @@ import (
 var (
 	// DBConn is a main database object for currency
 	DBConn database.Database
-	// addCurrencyTemplat is template for use case #4
-	addCurrencyTemplate *template.Template
-	// removeCurrencyTemplate is template for use case #5
-	removeCurrencyTemplate *template.Template
-	// addCurrencyRateTemplate is template for use case #1
-	addCurrencyRateTemplate *template.Template
-	// getCurrencyRateTemplate is template for use case #2
-	getCurrencyRateTemplate *template.Template
-	// trendCurrencyRateTemplate is template for use case #3
-	trendCurrencyRateTemplate *template.Template
 )
 
 type (
