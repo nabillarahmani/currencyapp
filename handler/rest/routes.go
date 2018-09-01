@@ -18,6 +18,12 @@ func InitRoutes(router *mux.Router) {
 	router.HandleFunc("/v1/currency/addremove", currency.AddRemoveCurrency).Methods("POST")
 	// get all currency
 	router.HandleFunc("/v1/currency/get", currency.GetCurrency).Methods("GET")
+	// add new currency rates
+	router.HandleFunc("/v1/currency_rates/add", currency.AddCurrencyRates).Methods("POST")
+	// get specific currency rates
+	router.HandleFunc("/v1/currency_rates/get/{date}", currency.GetCurrencyRates).Methods("GET")
+	// get trend
+	// router.HandleFunc("/v1/currency_rates/get/trend", currency.GetCurrencyRates).Methods("GET")
 
 	// go templating routes
 
