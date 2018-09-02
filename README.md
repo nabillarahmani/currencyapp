@@ -16,14 +16,23 @@ All incoming requests are handled in handler package. Package handler is designe
 
 - DB installation
     please create db setting as follow, just run in in terminal
+    
     `sudo -u postgres createuser test_user`
+    
     `sudo -u postgres createdb test_currency` 
+    
     `sudo -u postgres psql`
+    
     `alter user test_user with encrypted password 'testpass';`
+    
     `grant all privileges on database test_currency to test_user;`
+    
     `\q`
+    
     `psql test_user -h 127.0.0.1 -d test_currency`
+    
     `set search_path to public;`
+    
     `
         CREATE TABLE ws_currency(
         id SERIAL,
@@ -32,7 +41,9 @@ All incoming requests are handled in handler package. Package handler is designe
         status INT NOT NULL,
         PRIMARY KEY(from_curr, to_curr)
         );
-
+    `
+    
+    `
         CREATE TABLE ws_currency_rates(
         id SERIAL,
         date DATE NOT NULL,
@@ -51,5 +62,7 @@ All incoming requests are handled in handler package. Package handler is designe
 - running the application
 
     `cd app`
+    
     `go build`
+    
     `sudo ./app`
