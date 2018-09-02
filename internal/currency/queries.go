@@ -62,4 +62,16 @@ const (
 				AND
 			to_curr=  $4
 	`
+
+	queryGetLatest7CurrencyRates = `
+		SELECT
+			date, rates
+		FROM
+			ws_currency_rates
+		WHERE
+			from_curr = $1
+				AND
+			to_curr = $2
+		LIMIT 7
+	`
 )

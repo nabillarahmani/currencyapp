@@ -263,6 +263,31 @@ func getOneWeekPrevPeriode(date string) string {
 }
 
 // GetCurrencyRatesTrendController is a controller for getting all currency rates tren
-func GetCurrencyRatesTrendController() (err error) {
+func GetCurrencyRatesTrendController(data Data) (res currency.ArrCurrRatesData, err error) {
+	// validate parameter, if valid then true
+	result, err := isValidParam(data)
+	if !result {
+		log.Error(err)
+		return
+	}
+
+	// init pkg
+	pkg := currency.CurrPkg{}
+
+	// check if currency exist
+	result, err = pkg.IsCurrencyExist(data.From, data.To)
+	if !result {
+		err = ErrCurrencyNotExist
+		log.Error(err)
+		return
+	}
+
+	// if currency does exist, then continue to get rates detail data
+	res, err = pkg.GetCurrencyTrend(data.From, data.To)
+	if err != nil {
+		log.Error(err, "error when retrieve currency rates data trend")
+		return
+	}
+
 	return
 }

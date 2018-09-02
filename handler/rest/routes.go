@@ -23,7 +23,7 @@ func InitRoutes(router *mux.Router) {
 	// get specific currency rates
 	router.HandleFunc("/v1/currency_rates/get/{date}", currency.GetCurrencyRates).Methods("GET")
 	// get trend
-	// router.HandleFunc("/v1/currency_rates/get/trend", currency.GetCurrencyRates).Methods("GET")
+	router.HandleFunc("/v1/currency_rates/get/trend", currency.GetCurrencyRatesTrend).Methods("POST")
 
 	// go templating routes
 

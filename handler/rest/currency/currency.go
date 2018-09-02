@@ -208,14 +208,39 @@ func GetCurrencyRates(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
-/*
 // GetCurrencyRatesTrend is a handler for get currency rates tren
 func GetCurrencyRatesTrend(w http.ResponseWriter, r *http.Request) {
 	// prepare response result
 	var resp response.HandlerResponse
 
+	// get data from body
+	var data currency.Data
+	err := json.NewDecoder(r.Body).Decode(&data)
+	if err != nil {
+		log.Error(err, "There's an error while decode the body")
+		resp.StatusCode = http.StatusBadRequest
+		response.WriteAPIStandard(w, resp, err)
+		return
+	}
+
+	// validation data
+	if data.From == "" {
+		err = fmt.Errorf("From parameter is empty")
+		log.Error(err)
+		resp.StatusCode = http.StatusBadRequest
+		response.WriteAPIStandard(w, resp, err)
+		return
+	}
+	if data.To == "" {
+		err = fmt.Errorf("To parameter is empty")
+		log.Error(err)
+		resp.StatusCode = http.StatusBadRequest
+		response.WriteAPIStandard(w, resp, err)
+		return
+	}
+
 	// proceed data
-	res, err := currency.GetAllCurrencyController()
+	res, err := currency.GetCurrencyRatesTrendController(data)
 	if err != nil {
 		resp.StatusCode = http.StatusInternalServerError
 		log.Error(err)
@@ -228,4 +253,4 @@ func GetCurrencyRatesTrend(w http.ResponseWriter, r *http.Request) {
 	resp.StatusCode = http.StatusOK
 	response.WriteAPIStandard(w, resp, nil)
 	return
-}*/
+}

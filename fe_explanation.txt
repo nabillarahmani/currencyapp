@@ -191,3 +191,77 @@ There will be 2 endpoints needed, first for display all currency, and second for
 5. User wants to see the exchange rate trend from the most recent 7 data points
 
     - endpoint : `http://localhost:7777/v1/currency_rates/get/trend`
+
+    - example payload:
+    `
+        POST /v1/currency_rates/get/trend HTTP/1.1
+        Host: localhost:7777
+        Content-Type: application/x-www-form-urlencoded
+        Cache-Control: no-cache
+        Postman-Token: 44bde0fe-bd65-4cf0-bc98-51e3f72259e1
+
+        {
+            "from" : "USD",
+            "to" : "IDR"
+        }
+    `
+
+    - example response:
+    `
+        {
+            "header": {
+                "reason": "",
+                "status_code": "200"
+            },
+            "data": {
+                "currency_rates_data": [
+                    {
+                        "date": "0001-01-01",
+                        "from": "USD",
+                        "to": "IDR",
+                        "rates": 0.1233
+                    },
+                    {
+                        "date": "2018-01-01",
+                        "from": "USD",
+                        "to": "IDR",
+                        "rates": 0.123
+                    },
+                    {
+                        "date": "2018-08-25",
+                        "from": "USD",
+                        "to": "IDR",
+                        "rates": 0.33
+                    },
+                    {
+                        "date": "2018-08-26",
+                        "from": "USD",
+                        "to": "IDR",
+                        "rates": 0.33
+                    },
+                    {
+                        "date": "2018-08-27",
+                        "from": "USD",
+                        "to": "IDR",
+                        "rates": 0.1233
+                    },
+                    {
+                        "date": "2018-08-31",
+                        "from": "USD",
+                        "to": "IDR",
+                        "rates": 0.5
+                    },
+                    {
+                        "date": "2018-09-01",
+                        "from": "USD",
+                        "to": "IDR",
+                        "rates": 0.5
+                    }
+                ],
+                "from": "USD",
+                "to": "IDR",
+                "avg": "0.28994",
+                "variance": "0.37700"
+            }
+        }
+    `

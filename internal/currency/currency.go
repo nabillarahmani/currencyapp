@@ -151,3 +151,70 @@ func (pkg CurrPkg) GetCurrencyRatesByDate(from, to, sDate, eDate string) (res Wr
 	res.Avg = strconv.FormatFloat((tempRates / 7), 'f', 5, 64)
 	return
 }
+
+// GetCurrencyTrend is a function to compute and pull last transactional data
+func (pkg CurrPkg) GetCurrencyTrend(from, to string) (res ArrCurrRatesData, err error) {
+	// init temp var
+	var lowestRate, highestRate, tempRates float64
+
+	// update value
+	res.From = from
+	res.To = to
+
+	// get result
+	rows, err := DBConn.Queryx(queryGetLatest7CurrencyRates, from, to)
+	if err != nil {
+		log.Errorf(err, "error when querying latest 7 currency rate data, with param: from:[%s], to:[%s]", from, to)
+		return
+	}
+	defer rows.Close()
+
+	flag := true
+
+	for rows.Next() {
+		var tempDate time.Time
+		var tempRate float64
+
+		err = rows.Scan(
+			&tempDate,
+			&tempRate,
+		)
+		if err != nil {
+			log.Error(err, "Error when scan data")
+			return
+		}
+
+		// replace value
+		if flag {
+			// place first value as lowest and highest
+			lowestRate = tempRate
+			highestRate = tempRate
+			flag = false
+		}
+
+		// update value
+		if tempRate < lowestRate {
+			lowestRate = tempRate
+		}
+
+		if tempRate > highestRate {
+			highestRate = tempRate
+		}
+		tempRates += tempRate
+
+		// assign value
+		var tempCurrRatesData CurrRatesData
+		tempCurrRatesData.Date = tempDate.Format("2006-01-02")
+		tempCurrRatesData.From = from
+		tempCurrRatesData.To = to
+		tempCurrRatesData.Rates = tempRate
+
+		// append
+		res.Data = append(res.Data, tempCurrRatesData)
+	}
+	// update value
+	res.Avg = strconv.FormatFloat((tempRates / 7), 'f', 5, 64)
+	res.Variance = strconv.FormatFloat((highestRate - lowestRate), 'f', 5, 64)
+
+	return
+}
