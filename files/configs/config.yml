@@ -2,5 +2,5 @@ server:
   port: ":7777"
 
 database:
-  connectionURI: "host=127.0.0.1 user=nabey password='testpass' dbname=test_currency sslmode=disable"
+  connectionURI: "host=127.0.0.1 user=test_user password='testpass' dbname=test_currency sslmode=disable"
   connectionType: "sqlx"
