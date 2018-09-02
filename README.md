@@ -6,6 +6,8 @@ Model are all stored in `internal` package.
 
 View are all stored in `files/` package.
 
-Controller are all stored in `package/controller` package
+Controller are all stored in `internal/controller` package
+
+All routes are stored in `handler/rest/routes.go`
 
 All incoming requests are handled in handler package. Package handler is designed to have many handler such as REST, RPC, and MQ messages. But for now only REST is used. Then it would be processed by controller. 
